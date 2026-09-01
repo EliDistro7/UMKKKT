@@ -106,7 +106,7 @@ export const members: Member[] = [
 export const leaders: Leader[] = [
   {
     id: "L-001",
-    fullName: "Askofu Joseph Makwela",
+    fullName: "Askofu Joshua Alam Mwantyara",
     title: "Rais wa Baraza la UMKKT",
     region: "Kitaifa",
     phone: "+255 713 000 001",

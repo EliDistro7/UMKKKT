@@ -48,23 +48,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Stats bar */}
-        <div className="relative z-10" style={{ borderTop: "1px solid #222" }}>
-          <div className="container-editorial">
-            <div className="grid grid-cols-3 divide-x" style={{ borderColor: "#222" }}>
-              {[
-                { val: "500+", label: "Wanachama Hai" },
-                { val: "80+", label: "Makanisa" },
-                { val: "12", label: "Kanda" },
-              ].map((s) => (
-                <div key={s.label} className="py-8 px-4 md:px-8 text-center" style={{ borderRight: "1px solid #222" }}>
-                  <div className="font-editorial text-3xl md:text-4xl font-bold">{s.val}</div>
-                  <div className="meta-label text-gray-500 mt-1">{s.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+    
       </section>
 
       {/* ── Quick Links ────────────────────────────────────────── */}
@@ -142,7 +126,7 @@ export default function HomePage() {
               <div className="md:col-span-1">
                 <div className="relative aspect-[3/4] overflow-hidden bg-rule">
                   <Image
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80&auto=format&fit=crop&crop=face"
+                    src="/joshua.jpeg"
                     alt={president.fullName}
                     fill
                     className="object-cover object-top"
