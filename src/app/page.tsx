@@ -1,189 +1,167 @@
-'use client'
-
-import Link from 'next/link'
-import Image from 'next/image'
-import { useEffect, useState } from 'react'
-import { useLang } from '../lib/i18n/LanguageContext'
-import { listPortfolio } from '../lib/api/portfolio'
-import type { PortfolioItem } from '../lib/api/portfolio'
-import PortfolioCard from '../components/PortfolioCard'
-import PortfolioModal from '../components/PortfolioModal'
-import TeamSection from '../components/TeamSection'
-import ServicesCarousel from '../components/ServicesCarousel'
-import MobileShowcase from '../components/MobileShowcase';
-
-
-interface Stat {
-  value: string
-  labelKey: 'statsLabel1' | 'statsLabel2' | 'statsLabel3'
-}
-
-const STATS: Stat[] = [
-  { value: '30+', labelKey: 'statsLabel1' },
-  { value: '20+', labelKey: 'statsLabel2' },
-  { value: '3+',  labelKey: 'statsLabel3' },
-]
-
-function PortfolioTeaser() {
-  const { t, locale } = useLang()
-  const [items, setItems]     = useState<PortfolioItem[]>([])
-  const [loading, setLoading] = useState(true)
-  const [selected, setSelected] = useState<string | null>(null)
-
-  useEffect(() => {
-    listPortfolio()
-      .then(all => setItems(all.slice(0, 10)))
-      .catch(() => setItems([]))
-      .finally(() => setLoading(false))
-  }, [])
-
-  const selectedItem = items.find(p => p._id === selected)
-
-return (
-  <section className="section-pad border-t border-bss-border">
-    {/* Header stays contained */}
-    <div className="container-site">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
-        <div>
-          <h2 className="display-md">{t.portfolio.headline}</h2>
-        </div>
-        <Link
-          href="/portfolio"
-          className="link-underline text-sm tracking-wider uppercase font-medium text-bss-muted hover:text-bss-white shrink-0"
-        >
-          {t.common.viewWork} →
-        </Link>
-      </div>
-    </div>
-
-    {/* Grid breaks out of container — full bleed on all screens below sm */}
-    {loading ? (
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-bss-border">
-        {[0, 1, 2].map(i => (
-          <div key={i} className="aspect-[4/3] bg-bss-surface animate-pulse" />
-        ))}
-      </div>
-    ) : items.length > 0 ? (
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-bss-border">
-        {items.map(item => (
-          <PortfolioCard
-            key={item._id}
-            item={item}
-            title={locale === 'sw' ? item.titleSw : item.title}
-            onClick={() => setSelected(item._id)}
-          />
-        ))}
-      </div>
-    ) : (
-      <div className="container-site">
-        <div className="border border-bss-border py-16 flex flex-col items-center gap-4">
-          <p className="body-base text-bss-muted">Browse our full portfolio</p>
-          <Link href="/portfolio" className="btn-ghost text-sm">
-            View work →
-          </Link>
-        </div>
-      </div>
-    )}
-
-    {selectedItem && (
-      <PortfolioModal item={selectedItem} onClose={() => setSelected(null)} />
-    )}
-  </section>
-)
-}
+import Link from "next/link";
+import { ArrowRight, Shield, Search, Phone } from "lucide-react";
+import { leaders } from "../lib/data";
 
 export default function HomePage() {
-  const { t } = useLang()
+  const president = leaders.find((l) => l.title.includes("Rais"));
 
   return (
     <>
-      {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-screen flex flex-col justify-end pb-20 md:pb-28 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/skrapers/dar.png"
-            alt="Modern architecture — hero background"
-            fill
-            className="object-cover opacity-20"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-bss-black via-bss-black/30 to-bss-black/10" />
-        </div>
-
-        <div className="container-site relative z-10 pt-40">
-          <p className="eyebrow mb-6">{t.home.heroEyebrow}</p>
-          <h1 className="display-xl max-w-4xl mb-8">{t.home.heroHeadline}</h1>
-          <p className="body-lead max-w-prose mb-12">{t.home.heroSub}</p>
-
-          <div className="flex flex-wrap gap-4">
-            <Link href="/portfolio" className="btn-primary">{t.home.heroCta}</Link>
-            <Link href="/contact"   className="btn-ghost">{t.home.heroCtaSecond}</Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Stats bar ────────────────────────────────────────────────────── */}
-  
-
-      {/* ── Portfolio teaser ─────────────────────────────────────────────── */}
-      <PortfolioTeaser />
-
-   
-
-      {/* ── Services carousel ────────────────────────────────────────────── */}
-      <MobileShowcase />
-
-      {/* ── Why BSS ──────────────────────────────────────────────────────── */}
-      <section className="border-t border-bss-border overflow-hidden">
-        {/* Full-bleed image strip */}
-        <div className="relative h-[55vh] min-h-[340px] w-full">
-          <Image
-            src="/industries/smart_link.png"
-            alt="BSS — construction and real estate focus"
-            fill
-            className="object-cover opacity-60"
-          />
-          {/* Strong bottom fade so text block reads cleanly below */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-bss-black/20 to-bss-black" />
-          {/* Left-side eyebrow floating on image */}
-          <div className="absolute bottom-8 left-0 right-0">
-            <div className="container-site">
-              <p className="eyebrow">{t.home.whyEyebrow}</p>
+      {/* ── Hero ─────────────────────────────────────────────── */}
+      <section className="bg-ink text-paper">
+        <div className="container-editorial">
+          <div className="py-24 md:py-36 max-w-3xl">
+            <div className="meta-label text-gray-400 mb-6">
+              Umoja wa Makanisa Tanzania
+            </div>
+            <h1 className="font-editorial text-5xl md:text-7xl font-black leading-none mb-6">
+              Uhakiki.<br />
+              <span className="italic font-bold">Uaminifu.</span><br />
+              Umoja.
+            </h1>
+            <p className="text-gray-300 text-lg max-w-xl leading-relaxed mb-10">
+              Mfumo rasmi wa uhakiki wa uanachama wa UMKKT. Scan QR Code yoyote
+              ya kitambulisho cha mwanachama kupata taarifa kamili na za kweli.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link href="/verify" className="btn-primary" style={{ background: "white", color: "#0A0A0A" }}>
+                Hakiki Mwanachama
+              </Link>
+              <Link href="/members" className="btn-outline" style={{ borderColor: "#555", color: "white" }}>
+                Tazama Wanachama
+              </Link>
             </div>
           </div>
         </div>
 
-        {/* Text block flush below the image */}
-        <div className="container-site">
-          <div className="grid md:grid-cols-2 gap-px bg-bss-border">
-            {/* Headline cell */}
-            <div className="bg-bss-black py-12 md:py-16 pr-12">
-              <h2 className="display-lg">{t.home.whyHeadline}</h2>
-            </div>
-            {/* Body + CTA cell */}
-            <div className="bg-bss-black py-12 md:py-16 pl-12 flex flex-col justify-between gap-8">
-              <p className="body-lead text-bss-subtle">{t.home.whyBody}</p>
-              <Link href="/about" className="btn-ghost self-start">{t.common.learnMore}</Link>
+        {/* Stats bar */}
+        <div style={{ borderTop: "1px solid #222" }}>
+          <div className="container-editorial">
+            <div className="grid grid-cols-3 divide-x" style={{ borderColor: "#222" }}>
+              {[
+                { val: "500+", label: "Wanachama Hai" },
+                { val: "80+", label: "Makanisa" },
+                { val: "12", label: "Kanda" },
+              ].map((s) => (
+                <div key={s.label} className="py-8 px-4 md:px-8 text-center" style={{ borderRight: "1px solid #222" }}>
+                  <div className="font-editorial text-3xl md:text-4xl font-bold">{s.val}</div>
+                  <div className="meta-label text-gray-500 mt-1">{s.label}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── Team ─────────────────────────────────────────────────────────── */}
-      <TeamSection />
-
-      {/* ── CTA ──────────────────────────────────────────────────────────── */}
-      <section className="border-t border-bss-border">
-        <div className="container-site py-20 md:py-28 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-          <div>
-            <h2 className="display-md mb-3">{t.home.ctaHeadline}</h2>
-            <p className="body-lead">{t.home.ctaBody}</p>
+      {/* ── Quick Links ────────────────────────────────────────── */}
+      <section className="section-pad">
+        <div className="container-editorial">
+          <div className="editorial-rule mb-8" />
+          <div className="meta-label mb-8">Huduma za Haraka</div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-rule">
+            {[
+              {
+                icon: <Shield size={24} />,
+                title: "Hakiki Uanachama",
+                desc: "Thibitisha ukweli wa kitambulisho cha mwanachama wowote wa UMKKT kwa sekunde chache.",
+                href: "/verify",
+                cta: "Hakiki sasa",
+              },
+              {
+                icon: <Search size={24} />,
+                title: "Tafuta Kanisa",
+                desc: "Pata kanisa la UMKKT karibu nawe kwa kuchagua mkoa, wilaya, au kanda yako.",
+                href: "/churches",
+                cta: "Tafuta kanisa",
+              },
+              {
+                icon: <Phone size={24} />,
+                title: "Wasiliana Nasi",
+                desc: "Pata mawasiliano ya viongozi wa kitaifa na wa kanda yako kwa msaada wowote.",
+                href: "/leadership",
+                cta: "Mawasiliano",
+              },
+            ].map((item) => (
+              <div key={item.title} className="bg-paper p-8 flex flex-col">
+                <div className="mb-4 text-accent">{item.icon}</div>
+                <h3 className="font-editorial text-xl mb-3">{item.title}</h3>
+                <p className="text-sm text-mid leading-relaxed flex-1">{item.desc}</p>
+                <Link
+                  href={item.href}
+                  className="inline-flex items-center gap-2 mt-6 text-sm font-medium hover:text-accent transition-colors"
+                >
+                  {item.cta} <ArrowRight size={14} />
+                </Link>
+              </div>
+            ))}
           </div>
-          <Link href="/contact" className="btn-primary shrink-0">
-            {t.home.ctaButton}
-          </Link>
+        </div>
+      </section>
+
+      {/* ── President's Message ─────────────────────────────────── */}
+      {president && (
+        <section className="section-pad bg-white">
+          <div className="container-editorial">
+            <div className="editorial-rule mb-8" />
+            <div className="meta-label mb-10">Ujumbe wa Rais</div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
+              {/* Photo placeholder */}
+              <div className="md:col-span-1">
+                <div className="aspect-[3/4] bg-rule flex items-end p-6">
+                  <div>
+                    <div className="font-editorial text-lg">{president.fullName}</div>
+                    <div className="meta-label mt-1">{president.title}</div>
+                  </div>
+                </div>
+              </div>
+              {/* Message */}
+              <div className="md:col-span-2">
+                <h2 className="font-editorial text-4xl md:text-5xl mb-6 leading-tight">
+                  "Twajengana katika<br />
+                  <em>imani na umoja.</em>"
+                </h2>
+                <div className="light-rule mb-6" />
+                <p className="text-mid leading-relaxed mb-4 max-w-prose">
+                  Karibuni katika mfumo rasmi wa UMKKT. Umoja wetu umejengwa
+                  juu ya misingi imara ya imani, uwazi, na ushirikiano wa kweli
+                  kati ya makanisa yetu yote nchini Tanzania.
+                </p>
+                <p className="text-mid leading-relaxed max-w-prose">
+                  Mfumo huu wa kidijitali ni hatua muhimu katika kuhakikisha
+                  kwamba taarifa za wanachama wetu ni salama, zinapatikana, na
+                  zinaweza kuthibitishwa kwa urahisi na muda wowote.
+                </p>
+                <div className="mt-8">
+                  <Link href="/leadership" className="btn-outline inline-flex items-center gap-2">
+                    Uongozi Wote <ArrowRight size={14} />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── CTA Banner ──────────────────────────────────────────── */}
+      <section style={{ background: "#1A3C5E" }} className="py-16">
+        <div className="container-editorial text-center">
+          <div className="meta-label text-blue-300 mb-4">Jiunge Nasi</div>
+          <h2 className="font-editorial text-4xl text-white mb-4">
+            Je, kanisa lako liko kwenye mfumo?
+          </h2>
+          <p className="text-blue-200 mb-8 max-w-lg mx-auto">
+            Pakua fomu ya usajili na uwasiliane na ofisi ya UMKKT kwa mkoa wako.
+          </p>
+          <div className="flex justify-center gap-4">
+            <Link href="/downloads" className="btn-primary" style={{ background: "white", color: "#1A3C5E" }}>
+              Pakua Fomu
+            </Link>
+            <Link href="/churches" className="btn-outline" style={{ borderColor: "white", color: "white" }}>
+              Makanisa Yaliyosajiliwa
+            </Link>
+          </div>
         </div>
       </section>
     </>
-  )
+  );
 }

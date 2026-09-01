@@ -1,78 +1,32 @@
-'use client'
-
-import Link from 'next/link'
-import { useLang } from '../../lib/i18n/LanguageContext'
-
-const WHATSAPP_NUMBER = '255617833806'
+import Link from "next/link";
 
 export default function Footer() {
-  const { t } = useLang()
-  const year = new Date().getFullYear()
-
-  const col1 = [
-    { href: '/',          label: t.nav.home },
-    { href: '/about',     label: t.nav.about },
-    { href: '/services/profile',  label: t.nav.services },
-  ]
-  const col2 = [
-    { href: '/portfolio', label: t.nav.portfolio },
-    { href: '/pricing',   label: t.nav.pricing },
-    { href: '/contact',   label: t.nav.contact },
-  ]
-
   return (
-    <footer className="border-t border-bss-border bg-bss-surface">
+    <footer className="bg-ink text-paper">
+      <div className="container-editorial py-16">
+        <div className="editorial-rule border-paper mb-10" style={{ borderColor: "#333" }} />
 
-      {/* ── Big wordmark ─────────────────────────────────────────────── */}
-      <div className="border-b border-bss-border overflow-hidden">
-        <div className="container-site py-10 md:py-14">
-          <h2 className="font-display font-bold leading-none tracking-tightest
-                         text-[18vw] md:text-[14vw] lg:text-[11vw]
-                         text-bss-white opacity-[0.06] select-none">
-            BSS
-          </h2>
-        </div>
-      </div>
-
-      {/* ── Main footer grid ─────────────────────────────────────────── */}
-      <div className="container-site pt-16 pb-10">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
-
-          {/* Brand — takes up half */}
-          <div className="md:col-span-6">
-            <Link href="/" className="inline-block mb-8">
-              <span className="font-display text-4xl md:text-5xl font-bold text-bss-white tracking-tightest">
-                Bari Software Services
-              </span>
-            </Link>
-            <p className="body-lead max-w-sm mb-10">
-              Digital design and development for businesses that want to stand apart.
-              Dar es Salaam, Tanzania.
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+          {/* Brand */}
+          <div className="md:col-span-2">
+            <h3 className="font-editorial text-2xl mb-3">UMKKT</h3>
+            <p className="text-sm text-gray-400 leading-relaxed max-w-sm">
+              Umoja wa Makanisa ya Kanisa la Kweli Tanzania. Mfumo rasmi wa uhakiki wa uanachama na taarifa za shirika.
             </p>
-            <a
-              href={`https://wa.me/${WHATSAPP_NUMBER}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary self-start"
-            >
-              {t.contact.whatsappLabel} →
-            </a>
           </div>
 
-          {/* Spacer */}
-          <div className="hidden md:block md:col-span-2" />
-
-          {/* Nav col 1 */}
-          <div className="md:col-span-2">
-            <p className="eyebrow mb-8">Navigate</p>
-            <ul className="flex flex-col gap-5">
-              {col1.map(({ href, label }) => (
+          {/* Links */}
+          <div>
+            <div className="meta-label text-gray-500 mb-4">Viungo</div>
+            <ul className="flex flex-col gap-2">
+              {[
+                ["Nyumbani", "/"],
+                ["Uongozi", "/leadership"],
+                ["Makanisa", "/churches"],
+                ["Wanachama", "/members"],
+              ].map(([label, href]) => (
                 <li key={href}>
-                  <Link
-                    href={href}
-                    className="font-display text-2xl font-bold text-bss-muted
-                               hover:text-bss-white transition-colors duration-200"
-                  >
+                  <Link href={href} className="text-sm text-gray-400 hover:text-paper transition-colors">
                     {label}
                   </Link>
                 </li>
@@ -80,17 +34,17 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Nav col 2 */}
-          <div className="md:col-span-2">
-            <p className="eyebrow mb-8">&nbsp;</p>
-            <ul className="flex flex-col gap-5">
-              {col2.map(({ href, label }) => (
+          <div>
+            <div className="meta-label text-gray-500 mb-4">Huduma</div>
+            <ul className="flex flex-col gap-2">
+              {[
+                ["Hakiki Mwanachama", "/verify"],
+                ["Matukio", "/events"],
+                ["Pakua", "/downloads"],
+                ["Admin", "/admin"],
+              ].map(([label, href]) => (
                 <li key={href}>
-                  <Link
-                    href={href}
-                    className="font-display text-2xl font-bold text-bss-muted
-                               hover:text-bss-white transition-colors duration-200"
-                  >
+                  <Link href={href} className="text-sm text-gray-400 hover:text-paper transition-colors">
                     {label}
                   </Link>
                 </li>
@@ -99,17 +53,15 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* ── Bottom bar ───────────────────────────────────────────────── */}
-        <div className="rule mt-16 pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <p className="font-body text-xs tracking-wider uppercase text-bss-muted">
-            © {year} Bari Software Services. All rights reserved.
+        <div className="mt-12 pt-6 flex flex-col md:flex-row justify-between items-start gap-4" style={{ borderTop: "1px solid #333" }}>
+          <p className="meta-label text-gray-600">
+            © {new Date().getFullYear()} UMKKT. Haki zote zimehifadhiwa.
           </p>
-          <p className="font-body text-xs tracking-wider uppercase text-bss-muted">
-            {t.contact.officeLabel}: {t.contact.officeNumber}
+          <p className="meta-label text-gray-600">
+            Mfumo wa Uhakiki wa Uanachama
           </p>
         </div>
       </div>
-
     </footer>
-  )
+  );
 }

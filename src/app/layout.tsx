@@ -1,41 +1,32 @@
-import type { Metadata } from 'next'
-import '../lib/polyfills/uint8array'
+import type { Metadata } from "next";
 // @ts-ignore: allow global CSS import without module declarations
 import './globals.css'
-import { LangProvider } from '../lib/i18n/LanguageContext'
-import Navbar from '../components/layout/Navbar'
-import Footer from '../components/layout/Footer'
-import WhatsAppButton from '../components/ui/WhatsappButton'
+import Navbar from "../components/layout/Navbar";
+import Footer from "../components/layout/Footer";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://bari-software-services.online'),
-  title: 'Bari Software Services | BSS',
-  description: 'Company profiles, websites, mobile apps, business cards and proposals — Dar es Salaam, Tanzania.',
-  keywords: ['BSS', 'Bari Software Services', 'company profile Tanzania', 'website design Dar es Salaam', 'mobile app Tanzania'],
-  openGraph: {
-    title: 'Bari Software Services',
-    description: 'Digital design and development studio — Dar es Salaam, Tanzania.',
-    type: 'website',
-    url: 'https://bari-software-services.online',
-  },
-  alternates: {
-    canonical: 'https://bari-software-services.online',
-  },
-}
+  title: "UMKKT — Umoja wa Makanisa Tanzania",
+  description: "Mfumo Rasmi wa Uhakiki wa Uanachama na Taarifa za UMKKT",
+};
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="sw">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body>
-        <LangProvider>
-          <Navbar />
-          <main className="min-h-screen">
-            {children}
-          </main>
-          <Footer />
-          <WhatsAppButton />
-        </LangProvider>
+        <Navbar />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
-  )
+  );
 }
