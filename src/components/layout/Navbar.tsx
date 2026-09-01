@@ -10,7 +10,7 @@ const links = [
   { href: "/members", label: "Wanachama" },
   { href: "/events", label: "Matukio" },
   { href: "/downloads", label: "Pakua" },
-];
+]
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
