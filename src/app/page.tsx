@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Shield, Search, Phone } from "lucide-react";
 import { leaders } from "../lib/data";
 
@@ -8,8 +9,21 @@ export default function HomePage() {
   return (
     <>
       {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="bg-ink text-paper">
-        <div className="container-editorial">
+      <section className="bg-ink text-paper relative overflow-hidden">
+        {/* Hero background image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=1600&q=80&auto=format&fit=crop"
+            alt=""
+            fill
+            className="object-cover object-center opacity-20"
+            priority
+          />
+          {/* gradient so text stays readable */}
+          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/90 to-ink/40" />
+        </div>
+
+        <div className="container-editorial relative z-10">
           <div className="py-24 md:py-36 max-w-3xl">
             <div className="meta-label text-gray-400 mb-6">
               Umoja wa Makanisa Tanzania
@@ -35,7 +49,7 @@ export default function HomePage() {
         </div>
 
         {/* Stats bar */}
-        <div style={{ borderTop: "1px solid #222" }}>
+        <div className="relative z-10" style={{ borderTop: "1px solid #222" }}>
           <div className="container-editorial">
             <div className="grid grid-cols-3 divide-x" style={{ borderColor: "#222" }}>
               {[
@@ -66,6 +80,8 @@ export default function HomePage() {
                 desc: "Thibitisha ukweli wa kitambulisho cha mwanachama wowote wa UMKKT kwa sekunde chache.",
                 href: "/verify",
                 cta: "Hakiki sasa",
+                img: "https://images.unsplash.com/photo-1584432810601-6c7f27d2362b?w=600&q=75&auto=format&fit=crop",
+                imgAlt: "Uhakiki wa kitambulisho",
               },
               {
                 icon: <Search size={24} />,
@@ -73,6 +89,8 @@ export default function HomePage() {
                 desc: "Pata kanisa la UMKKT karibu nawe kwa kuchagua mkoa, wilaya, au kanda yako.",
                 href: "/churches",
                 cta: "Tafuta kanisa",
+                img: "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=600&q=75&auto=format&fit=crop",
+                imgAlt: "Kanisa",
               },
               {
                 icon: <Phone size={24} />,
@@ -80,18 +98,33 @@ export default function HomePage() {
                 desc: "Pata mawasiliano ya viongozi wa kitaifa na wa kanda yako kwa msaada wowote.",
                 href: "/leadership",
                 cta: "Mawasiliano",
+                img: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=600&q=75&auto=format&fit=crop",
+                imgAlt: "Viongozi wa kanisa",
               },
             ].map((item) => (
-              <div key={item.title} className="bg-paper p-8 flex flex-col">
-                <div className="mb-4 text-accent">{item.icon}</div>
-                <h3 className="font-editorial text-xl mb-3">{item.title}</h3>
-                <p className="text-sm text-mid leading-relaxed flex-1">{item.desc}</p>
-                <Link
-                  href={item.href}
-                  className="inline-flex items-center gap-2 mt-6 text-sm font-medium hover:text-accent transition-colors"
-                >
-                  {item.cta} <ArrowRight size={14} />
-                </Link>
+              <div key={item.title} className="bg-paper flex flex-col">
+                {/* Card image */}
+                <div className="relative h-44 overflow-hidden">
+                  <Image
+                    src={item.img}
+                    alt={item.imgAlt}
+                    fill
+                    className="object-cover object-center"
+                  />
+                  <div className="absolute inset-0 bg-ink/10" />
+                </div>
+                {/* Card body */}
+                <div className="p-8 flex flex-col flex-1">
+                  <div className="mb-4 text-accent">{item.icon}</div>
+                  <h3 className="font-editorial text-xl mb-3">{item.title}</h3>
+                  <p className="text-sm text-mid leading-relaxed flex-1">{item.desc}</p>
+                  <Link
+                    href={item.href}
+                    className="inline-flex items-center gap-2 mt-6 text-sm font-medium hover:text-accent transition-colors"
+                  >
+                    {item.cta} <ArrowRight size={14} />
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
@@ -105,12 +138,22 @@ export default function HomePage() {
             <div className="editorial-rule mb-8" />
             <div className="meta-label mb-10">Ujumbe wa Rais</div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
-              {/* Photo placeholder */}
+              {/* Photo */}
               <div className="md:col-span-1">
-                <div className="aspect-[3/4] bg-rule flex items-end p-6">
-                  <div>
-                    <div className="font-editorial text-lg">{president.fullName}</div>
-                    <div className="meta-label mt-1">{president.title}</div>
+                <div className="relative aspect-[3/4] overflow-hidden bg-rule">
+                  <Image
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80&auto=format&fit=crop&crop=face"
+                    alt={president.fullName}
+                    fill
+                    className="object-cover object-top"
+                  />
+                  {/* Name overlay at bottom */}
+                  <div
+                    className="absolute bottom-0 left-0 right-0 p-6"
+                    style={{ background: "linear-gradient(to top, rgba(10,10,10,0.85) 0%, transparent 100%)" }}
+                  >
+                    <div className="font-editorial text-lg text-paper">{president.fullName}</div>
+                    <div className="meta-label mt-1 text-gray-300">{president.title}</div>
                   </div>
                 </div>
               </div>
@@ -143,8 +186,17 @@ export default function HomePage() {
       )}
 
       {/* ── CTA Banner ──────────────────────────────────────────── */}
-      <section style={{ background: "#1A3C5E" }} className="py-16">
-        <div className="container-editorial text-center">
+      <section style={{ background: "#1A3C5E" }} className="py-16 relative overflow-hidden">
+        {/* Subtle background texture */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1600&q=60&auto=format&fit=crop"
+            alt=""
+            fill
+            className="object-cover object-center opacity-10"
+          />
+        </div>
+        <div className="container-editorial text-center relative z-10">
           <div className="meta-label text-blue-300 mb-4">Jiunge Nasi</div>
           <h2 className="font-editorial text-4xl text-white mb-4">
             Je, kanisa lako liko kwenye mfumo?
