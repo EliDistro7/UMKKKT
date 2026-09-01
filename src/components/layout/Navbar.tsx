@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 
 const links = [
   { href: "/", label: "Nyumbani" },
@@ -21,8 +22,14 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-ink flex items-center justify-center">
-              <span className="text-paper font-editorial font-black text-sm leading-none">U</span>
+            <div className="w-9 h-9 relative flex-shrink-0">
+              <Image
+                src="/logo.png"
+                alt="UMKKT Logo"
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
             <div>
               <div className="font-editorial font-bold text-sm leading-tight">UMKKT</div>

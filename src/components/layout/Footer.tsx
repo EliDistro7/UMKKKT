@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -9,7 +10,17 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="md:col-span-2">
-            <h3 className="font-editorial text-2xl mb-3">UMKKT</h3>
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 relative flex-shrink-0">
+                <Image
+                  src="/logo.png"
+                  alt="UMKKT Logo"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <h3 className="font-editorial text-2xl">UMKKT</h3>
+            </div>
             <p className="text-sm text-gray-400 leading-relaxed max-w-sm">
               Umoja wa Makanisa ya Kanisa la Kweli Tanzania. Mfumo rasmi wa uhakiki wa uanachama na taarifa za shirika.
             </p>
