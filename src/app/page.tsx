@@ -64,7 +64,7 @@ export default function HomePage() {
                 desc: "Thibitisha ukweli wa kitambulisho cha mwanachama wowote wa UMKKT kwa sekunde chache.",
                 href: "/verify",
                 cta: "Hakiki sasa",
-                img: "https://images.unsplash.com/photo-1584432810601-6c7f27d2362b?w=600&q=75&auto=format&fit=crop",
+                img: "/woman.png",
                 imgAlt: "Uhakiki wa kitambulisho",
               },
               {
@@ -73,7 +73,7 @@ export default function HomePage() {
                 desc: "Pata kanisa la UMKKT karibu nawe kwa kuchagua mkoa, wilaya, au kanda yako.",
                 href: "/churches",
                 cta: "Tafuta kanisa",
-                img: "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=600&q=75&auto=format&fit=crop",
+                img: "/church.jpeg",
                 imgAlt: "Kanisa",
               },
               {
@@ -82,13 +82,13 @@ export default function HomePage() {
                 desc: "Pata mawasiliano ya viongozi wa kitaifa na wa kanda yako kwa msaada wowote.",
                 href: "/leadership",
                 cta: "Mawasiliano",
-                img: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=600&q=75&auto=format&fit=crop",
+                img: "/contact.png",
                 imgAlt: "Viongozi wa kanisa",
               },
             ].map((item) => (
               <div key={item.title} className="bg-paper flex flex-col">
                 {/* Card image */}
-                <div className="relative h-44 overflow-hidden">
+                <div className="relative h-96 overflow-hidden">
                   <Image
                     src={item.img}
                     alt={item.imgAlt}
